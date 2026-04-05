@@ -9,7 +9,7 @@ servers:
 
 paths:
 
-  /users:
+  /events/api/v1/user/insert:
     post:
       summary: Create a new user
       requestBody:
@@ -47,7 +47,7 @@ paths:
         500:
           description: Internal server error
 
-  /events:
+  /events/api/v1/event/events:
     get:
       summary: Get all upcoming events
       responses:
@@ -115,7 +115,7 @@ paths:
         500:
           description: Internal server error
 
-  /bookings:
+  /events/api/v1/event/bookings:
     post:
       summary: Book tickets for an event
       requestBody:
@@ -157,7 +157,7 @@ paths:
         500:
           description: Internal server error
 
-  /users/{id}/bookings:
+  /events/api/v1/user/users/{id}/bookings:
     get:
       summary: Get all bookings for a user
       parameters:
@@ -192,7 +192,7 @@ paths:
         500:
           description: Internal server error
 
-  /events/{id}/attendance:
+  /events/api/v1/event/events/{id}/attendance:
     post:
       summary: Get number of tickets booked using booking code
       parameters:

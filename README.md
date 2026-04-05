@@ -90,12 +90,12 @@ http://localhost:4000/api-docs
 
 ## API Endpoints
 
-POST   /api/users  
-GET    /api/events  
-POST   /api/events  
-POST   /api/bookings  
-GET    /api/users/:id/bookings  
-POST   /api/events/:id/attendance  
+POST   /events/api/v1/user/insert 
+GET    /events/api/v1/event/events  
+POST   /events/api/v1/event/events  
+POST   /events/api/v1/event/bookings  
+GET    /events/api/v1/user/users/:id/bookings  
+POST   /events/api/v1/event/events/:id/attendance  
 
 ---
 
