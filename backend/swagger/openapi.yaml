@@ -1,0 +1,236 @@
+openapi: 3.0.0
+info:
+  title: Mini Event Management API
+  version: 1.0.0
+  description: API for managing events and bookings
+
+servers:
+  - url: http://localhost:4000/
+
+paths:
+
+  /users:
+    post:
+      summary: Create a new user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [name, email]
+              properties:
+                name:
+                  type: string
+                  example: Rahul
+                email:
+                  type: string
+                  example: test@example.com
+      responses:
+        201:
+          description: User created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  flag:
+                    type: integer
+                    example: 1
+                  flag_message:
+                    type: string
+                    example: User Created Successfully
+        400:
+          description: Validation error
+        409:
+          description: Email already exists
+        500:
+          description: Internal server error
+
+  /events:
+    get:
+      summary: Get all upcoming events
+      responses:
+        200:
+          description: List of events
+          content:
+            application/json:
+               schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    title:
+                      type: string
+                    description:
+                      type: string
+                    event_date:
+                      type: string
+                      example: 2026-06-15T10:30:00
+                    total_capacity:
+                      type: integer
+                    remaining_tickets:
+                      type: integer
+
+    post:
+      summary: Create a new event
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [title, date, totalCapacity]
+              properties:
+                title:
+                  type: string
+                  example: AI Conference
+                description:
+                  type: string
+                  example: Tech event
+                eventDate:
+                  type: string
+                  example: 2026-06-15T10:30:00
+                totalCapacity:
+                  type: integer
+                  example: 100
+      responses:
+        201:
+          description: User created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  flag:
+                    type: integer
+                    example: 1
+                  flag_message:
+                    type: string
+                    example: Event Created Successfully
+        400:
+          description: Validation error
+        500:
+          description: Internal server error
+
+  /bookings:
+    post:
+      summary: Book tickets for an event
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [userId, eventId, tickets_count]
+              properties:
+                userId:
+                  type: integer
+                  example: 1
+                eventId:
+                  type: integer
+                  example: 2
+                tickets_count:
+                  type: integer
+                  example: 2
+      responses:
+        200:
+          description: Booking successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  flag : 
+                   type : integer
+                   example : 1
+                  flag_message : 
+                    type: string
+                    example: "Events fetched Successfully"
+                  data:
+                    type: string
+                    example: abc-123-xyz
+        400:
+          description: Not enough tickets or invalid input
+        500:
+          description: Internal server error
+
+  /users/{id}/bookings:
+    get:
+      summary: Get all bookings for a user
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+          example: 1
+      responses:
+        200:
+          description: List of bookings
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    event_id:
+                      type: integer
+                    booking_code:
+                      type: string
+                    tickets_count:
+                      type: integer
+                    booking_date:
+                      type: string
+        404:
+          description: User not found
+        500:
+          description: Internal server error
+
+  /events/{id}/attendance:
+    post:
+      summary: Get number of tickets booked using booking code
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+          example: 2
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [code]
+              properties:
+                code:
+                  type: string
+                  example: abc-123-xyz
+      responses:
+        200:
+          description: Tickets count
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  flag : 
+                   type : integer
+                   example : 1
+                  flag_message : 
+                    type: string
+                    example: "fetched Successfully"
+                  tickets_booked:
+                    type: integer
+                    example: 2
+        404:
+          description: Invalid booking code or event
+        500:
+          description: Internal server error

@@ -5,9 +5,9 @@ export const get = async (req,res,next) => {
     try {
             const [result] = await pool.query(`select * from events`)
       
-            return res.status(202).json({
+            return res.status(200).json({
                   flag : 1,
-                  flag_message : "Event get Successfully",
+                  flag_message : "Event fetched Successfully",
                   data: result
             })  
     }catch(err)
@@ -76,7 +76,7 @@ export const booking = async (req,res,next) => {
 
       await conn.commit();
       
-      return res.status(202).json({
+      return res.status(200).json({
         flag : 1,
         flag_message : "booked successfully",
         data : booking_code,
@@ -114,7 +114,7 @@ export const attendance = async (req,res,next) => {
              });
         }
 
-        res.status(202).json({
+        res.status(200).json({
             flag : 1,
             flag_message : "fetched successfully",
             tickets_booked: booking[0].tickets_count,

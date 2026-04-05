@@ -48,9 +48,9 @@ export const getBookings = async (req,res,next) => {
                   inner join users u on b.user_id = u.Id
                   where u.id = ?`,[id]);
       
-            return res.status(202).json({
+            return res.status(200).json({
                   flag : 1,
-                  flag_message : "Event get Successfully",
+                  flag_message : "bookings fetched Successfully",
                   data: result
             })  
     }catch(err)
